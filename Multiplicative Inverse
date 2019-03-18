@@ -1,0 +1,15 @@
+#include <iostream>
+using namespace std;
+#define m 1000000007
+int main() {
+long long int n;
+cin>>n;
+for(long long int i=1;i<m;i++)
+{
+	long long int y=(n*i)%m;
+	if(y==1){
+	cout<<i;}
+}
+
+	return 0;
+}
