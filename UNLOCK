@@ -27,7 +27,7 @@ int main() {
 		break;
 			}
 			
-	 	int x=5-it->first;
+	 	int x=n-it->first;
 	 	//cout<<x<<" ";
 	 	for(it3=m.begin();it3!=m.end();it3++)
 	 	{
