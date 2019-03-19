@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,k;
+	cin>>n>>k;
+	map<int,int> m;
+	for(int i=0;i<n;i++)
+	{
+		cin>>m[i];
+	}
+	map<int,int>::iterator it;
+	map<int,int>::iterator it2;
+	map<int,int>::iterator it3;
+	int y=0,z=0;
+	it=m.begin();
+		for(it=m.begin();it!=m.end();it++)
+	 {
+//	cout<<it->second<<" "<<it->first<<endl;
+	 }
+	
+	int count=0;
+	 for(it=m.begin();it!=m.end();it++)
+	 {
+	 	if(count==k)
+			{
+		break;
+			}
+			
+	 	int x=5-it->first;
+	 	//cout<<x<<" ";
+	 	for(it3=m.begin();it3!=m.end();it3++)
+	 	{
+	 		if(m[it3->first]==x)
+	 		{
+	 			y=it3->first;
+	 			//cout<<y<<endl;
+	 			break;
+	 			
+	 		}
+	 	}
+	 	
+	 	
+	 	
+		it2=m.find(y);
+		 //cout<<it2->second<<endl;
+		//cout<<x<<endl;
+		//cout<<it->second<<" "<<x<<endl;
+		if(it2!=m.end() && it->second!=x)
+		{
+			int temp=it->second;
+			m[it->first]=it2->second;
+			m[it2->first]=temp;
+			//it->first=(f->second);
+		//	m[(f-first)]=temp;
+		count++;
+		
+		}//cout<<count<<endl;
+		
+	 }
+	for(it=m.begin();it!=m.end();it++)
+	 {
+	cout<<it->second<<" ";
+	 }
+	
+	return 0;
+}
