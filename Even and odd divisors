@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+ll N=100005;
+ll ans[100005];
+	   
+int main() {
+			fast
+			// #ifndef ONLINE_JUDGE
+			// freopen("input.txt","r",stdin);
+			// freopen("output.txt","w",stdout);
+			// #endif
+			
+			ans[1]=-1;
+			for(ll i=2;i<N;i++)
+			{
+				ll e=0,o=0;
+				for(ll j=1;j*j<=i;j++)
+				{
+					if(i%j==0)
+					{
+						if(i/j==j)
+						{
+							ll x=j;
+							if(x%2==0)
+							e+=j;
+							else
+							o+=j;
+						}
+						else
+						{
+							ll x=j;
+							ll y=i/j;
+							if(x%2==0)
+							e+=x;
+							else
+							o+=x;
+							if(y%2==0)
+							e+=y;
+							else
+							o+=y;
+						}
+						
+					}
+				}
+				ans[i]=e-o;
+			}
+
+			
+
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				ll n;
+                cin>>n;
+                
+				cout<<ans[n]<<endl;
+                
+			}
+			return 0;
+		 }	

@@ -1,0 +1,4 @@
+x=int(input())
+ans=int(3)*x*x-x+10
+ans+=(4*x*x*x+2*x*x-5*x+4)
+print(ans)

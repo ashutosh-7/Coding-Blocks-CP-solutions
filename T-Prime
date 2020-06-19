@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+ll N=1000002;
+
+
+
+int main() {
+			fast
+			
+            ll prime[N];
+            for(ll i=0;i<N;i++)
+            prime[i]=1;
+            prime[1]=0;
+            for(ll i=2;i*i<N;i++)
+            {
+                for(ll j=2*i;j<N;j=j+i)
+                prime[j]=0;
+            }
+            ll n;
+            cin>>n;
+            while(n--)
+            {
+                ll x;
+                cin>>x;
+                ll y=sqrt(x);
+                if(x==1)
+                {
+                    cout<<"NO"<<endl;
+                    continue;
+                }
+                if(y*y==x)
+                {
+                    if(prime[y]==1)
+                    cout<<"YES"<<endl;
+                    else
+                    cout<<"NO"<<endl;
+                }
+                else
+                cout<<"NO"<<endl;
+            }
+
+            
+
+			
+			return 0;
+		 }	

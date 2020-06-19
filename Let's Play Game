@@ -1,0 +1,26 @@
+    #include <stdio.h>
+     
+    int pp(int n){
+    	for(int i=2;i*i<=n;++i)	{
+    		if(n%i == 0){
+    			return 0;
+    		}
+    	}
+    	return 1;
+    }
+     
+    int main()
+    {
+        long long dp[505];
+    	dp[1] = 0;
+    	long long no_of_prime = 0;
+    	for(int i=2;i<505;++i){
+    		if(pp(i)) ++no_of_prime;
+    		long long value = 1ll<<(no_of_prime-1);
+    		dp[i] = dp[i-1] + value;
+    	}
+    	int N;
+    	scanf("%d",&N);
+    	printf("%lld\n",dp[N]);
+    	return 0;
+    }

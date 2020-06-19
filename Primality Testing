@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
+using namespace std;
+
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define PSET(x,y) fixed<<setprecision(y)<<x
+#define pb push_back
+#define pf push_front
+#define mp make_pair
+#define pii pair<int,int>
+#define pid pair<int,double>
+#define vi vector<int>
+#define ff first
+#define ss second
+#define int long long
+#define ull unsigned long long
+#define SIZE 200010
+#define MOD 1000000007
+#define BIG 998244353
+#define s(t) scanf("%d",&t)
+#define p(t) printf("%d\n",t)
+#define mii map<int,int>
+#define TC int tc;cin>>tc;while(tc--)
+#define MSET(table,i) memset(table, i, sizeof(table))
+
+bool isPrimefirst(int n) 
+{ 
+    if (n <= 1)  return false; 
+    if (n <= 3)  return true; 
+    if (n%2 == 0 || n%3 == 0) return false; 
+    for (int i=5; i*i<=n; i=i+6) 
+        if (n%i == 0 || n%(i+2) == 0) 
+           return false; 
+    return true; 
+}
+bool isPrimesecond(int n) 
+{ 
+    if (n <= 1)  return false; 
+    if (n <= 3)  return true; 
+    if (n%2 == 0 || n%3 == 0) return false; 
+    for (int i=5; i*i*i<=n; i=i+6) 
+        if (n%i == 0 || n%(i+2) == 0) 
+           return false; 
+    return true; 
+}
+
+
+int32_t main()
+{
+    fast;
+    int x=pow(10,15);
+    int tc;cin>>tc;
+    while(tc--)
+    {
+        int n;cin>>n;
+        if(n<x)
+        {
+            if(isPrimefirst(n))
+                cout<<"YES"<<endl;
+            else
+                cout<<"NO"<<endl;
+        }
+        else
+        {
+            if(isPrimesecond(n))
+                cout<<"YES"<<endl;
+            else
+                cout<<"NO"<<endl;
+        }
+    }
+}

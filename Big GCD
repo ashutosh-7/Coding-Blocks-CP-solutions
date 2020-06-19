@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+
+			ll power(ll a,ll b)
+			{
+				if(b==0)
+				return 1ll;
+				if(b==1)
+				return a%mod;
+
+				ll x=power(a,b/2);
+				if(b%2==0)
+				return ((x%mod)* (x%mod))%mod;
+
+				return ((((a%mod)* (x%mod))%mod)* (x%mod))%mod;
+			}
+
+			ll gcdX(ll a,ll b)
+			{
+				if(a==0)
+				return b;
+				if(b==0)
+				return a;
+
+				return gcdX(b,a%b);
+			}
+
+ int main() {
+			fast
+			
+			ll n;
+			string m;
+			cin>>n>>m;
+			if(n==0)
+			{
+				cout<<m<<endl;
+				return 0;
+			}
+
+			mod=n;
+			
+			ll x=0;
+			ll ans=0;
+			for(ll i=0;i<m.size();i++)
+			{
+				ll len=m.size()-i-1;
+				ll num=m[i]-'0';
+				ll x=power(10ll,len);
+				ll temp=(num%mod * x%mod)%mod;
+				ans=(ans%mod+temp%mod)%mod;
+			}
+
+			ans=gcdX(n,ans);
+			cout<<ans<<endl;
+
+
+			return 0;
+		 }	
