@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<ll>adj[1009];
+ll dist[1009];
+ll n,m;
+ll board[102];
+        
+        void bfs(ll source)
+        {
+            memset(dist,-1,sizeof(dist));
+            queue<ll>q;
+            q.push(source);
+            dist[source]=0;
+            while(!q.empty())
+            {
+                ll cn=q.front();
+                q.pop();
+                for(auto it:adj[cn])
+                {
+                    if(dist[it]==-1)
+                    {
+                        dist[it]=dist[cn]+1;
+                        q.push(it);
+                    }
+                }
+            }
+        }
+    
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                memset(board,0,sizeof(board));
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+
+                     memset(board,0,sizeof(board));
+                    cin>>n;
+                    for(ll i=0;i<n;i++)
+                    {
+                        ll a,b;
+                        cin>>a>>b;
+                        board[a]=b;//ladder jump
+                    }
+                    cin>>m;
+                    for(ll i=0;i<m;i++)
+                    {
+                        ll a,b;
+                        cin>>a>>b;
+                        // adj[a].pb(b);
+                       board[a]=b;  //snake jump
+                    }
+                    for(ll i=0;i<=100;i++)
+                    {
+                        for(ll dice=1;dice<=6;dice++)
+                        {
+                            ll dest;
+                            if(board[i+dice]!=0)
+                             dest=board[i+dice];
+                            else
+                             dest=i+dice;
+                            if(dest>100)
+                                continue;
+                            adj[i].pb(dest);
+                        }
+                    }
+                	
+                    bfs(0);
+                    // for(ll i=1;i<=100;i++)
+                    //     cout<<dist[i]<<"      ";
+
+                   cout<<dist[100]<<endl;
+                    // cout<<endl<<endl<<endl<<endl;
+                    for(ll i=0;i<1009;i++)
+                        adj[i].clear();
+                }
+
+                return 0;
+            }

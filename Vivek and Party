@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<ll>adj[100000];
+vector<ll>ans;
+ll indegree[100000];
+priority_queue<ll,vector<ll>,greater<ll>>q;
+map<ll,string>id2;
+map<string,ll>id;
+
+
+            void print(ll xx)
+            {
+                cout<<"Case #"<<xx<<": Vivek should drink beverages in this order: ";
+
+                    for(ll i=0;i<ans.size()-1;i++)
+                        cout<<id2[ans[i]]<<" ";
+                        cout<<id2[ans[ans.size()-1]]<<"."<<endl;
+                        // cout<<endl;
+                        ans.clear();
+            }
+
+            void topsort()
+            {
+                while(!q.empty())
+                {
+                    ll cn=q.top();
+                    ans.pb(cn);
+                    q.pop();
+                    for(auto it:adj[cn])
+                    {
+                        indegree[it]-=1;
+                        if(indegree[it]==0)
+                            q.push(it);
+                    }
+                }
+            }
+
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll n,m,xx=1;
+
+                while(cin>>n)
+                {
+                    
+                    memset(indegree,0,sizeof(indegree));
+                    for(ll i=1;i<=n;i++) {
+                        string s;
+                        cin>>s;
+                        id[s]=i;
+                        id2[i]=s;
+                    }
+
+                    cin>>m;
+                    for(ll i=0;i<m;i++)
+                    {
+                        string a,b;
+                        cin>>a>>b;
+                        adj[id[a]].pb(id[b]);
+                        indegree[id[b]]++;
+                    }
+                    for(ll i=1;i<=n;i++)
+                    {
+                        if(indegree[i]==0)
+                            q.push(i);
+                    }
+                    topsort();
+                    print(xx);
+                    xx+=1;
+
+                }
+
+                return 0;
+            }

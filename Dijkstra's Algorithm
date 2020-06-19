@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+    vector<pair<ll,ll>>adj[100000];
+    ll dist[100000];
+    bool visited[100000];
+
+       void dijsktra(ll source)
+        {
+             for(ll i=0;i<100000;i++)
+             dist[i]=LLONG_MAX;
+            priority_queue<pair<ll,ll> ,vector<pair<ll,ll>> ,greater<pair<ll,ll>>>q;
+            q.push({0,source});
+            memset(visited,false,sizeof(visited));
+            dist[source]=0;
+            while(!q.empty())
+            {
+                ll cn=q.top().second;
+                ll weight=q.top().first;
+                q.pop();
+                if(visited[cn]==true)
+                    continue;
+                visited[cn]=true;
+                for(auto it:adj[cn])
+                {
+                    ll nn=it.first;
+                    ll nw=it.second;
+                   
+                        if(dist[cn]+nw<dist[nn] ){
+                            dist[nn]=dist[cn]+nw;     
+                            q.push({dist[nn],nn});
+                        
+                    }
+                }
+            }
+        }
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                ll t;
+                cin>>t;
+                while(t--){
+                ll n,m;
+                cin>>n>>m;
+               
+                for(ll i=0;i<m;i++)
+                {
+                    ll a,b,c;
+                    cin>>a>>b>>c;
+                    adj[a].pb({b,c});
+                    adj[b].pb({a,c});
+                    
+                }
+                ll s;
+                cin>>s;
+               dijsktra(s);
+                for(ll i=1;i<=n;i++)
+                {
+                    if(i==s)
+                        continue;
+                    if(dist[i]==LLONG_MAX)
+                        cout<<-1<<" ";
+                    else
+                    cout<<dist[i]<<" ";
+                }
+                for(ll i=1;i<=10000;i++)
+                    adj[i].clear();
+}
+
+                return 0;
+            }

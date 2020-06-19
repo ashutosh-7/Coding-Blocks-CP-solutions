@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+   vector<pair<ll,ll>>adj[2000000];
+ll count2[2000000];
+bool visited[2000000];
+ll n,ans;
+
+                    ll dfs(ll source,ll x=0)
+                    {
+                        visited[source]=true;
+                        // ll ans=1;
+                        for(auto it:adj[source])
+                        {
+                            if(visited[it.first]==false)
+                            {
+                                // parent[it.first]=source;
+                                dfs(it.first,x);
+                                ans+=2*min(count2[it.first],(n-count2[it.first]))*it.second;
+                               // cout<<ans<<endl;
+                                count2[source]+=count2[it.first];
+                            }
+
+                        }
+                        
+                        // return count2[source];
+                    }
+
+
+
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll t,c1=1;
+                cin>>t;
+
+                while(t--)
+                {
+                    cin>>n;
+                    for(ll i=1;i<=n;i++)
+                        count2[i]=1;
+                    for(ll i=1;i<n;i++)
+                    {
+                        ll a,b,c;
+                        cin>>a>>b>>c;
+                        adj[a].pb({b,c});
+                        adj[b].pb({a,c});
+                    }
+                    // dfs(1);
+                    for(ll i=1;i<=n;i++)
+                    {
+                    if(visited[i]==false)
+                    {
+                        dfs(i);
+                    }
+                    }
+               
+                // for(ll i=1;i<=n;i++)
+                //     cout<<count2[i]<<endl;
+                memset(visited,false,sizeof(visited));
+                 cout<<"Case #"<<c1<<": "<<ans<<endl;
+                c1+=1;
+                for(ll i=0;i<=n;i++)
+                adj[i].clear();
+                ans=0;
+                }
+
+                return 0;
+            }

@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<ll>parent,len;
+        ll find(ll n)
+        {
+            if(parent[n]==n)
+                return n;
+            return parent[n]=find(parent[n]);
+        }
+
+        void add(ll a,ll b)
+        {
+            a=find(a);
+            b=find(b);
+            if(a==b)
+                return;
+            parent[b]=a;
+            len[a]+=len[b];
+        }
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+               ll n,m;
+               cin>>n>>m;
+               parent.resize(n+1);
+               len.resize(n+1);
+               for(ll i=0;i<n;i++)
+               {
+                parent[i]=i;
+                len[i]=1;
+               }
+               for(ll i=0;i<m;i++)
+               {
+                ll a,b;
+                cin>>a>>b;
+                add(a,b);
+               }
+               bool visited[n]={0};
+               vector<ll>ans;
+               for(ll i=0;i<n;i++)
+               {
+                if(visited[find(i)]==0)
+                {
+                    visited[find(i)]=1;
+                    ans.pb(len[find(i)]);
+                }
+               }
+               ll ans2=0;
+               for(ll i=0;i<ans.size();i++)
+               {
+                   // cout<<ans[i]<<" ";
+                        ans2+=(ans[i]*(n-ans[i]));
+                    //}
+               }
+                
+                 if(ans.size()==1)
+                cout<<0<<endl;
+                else
+                cout<<ans2/2<<endl;
+
+                return 0;
+            }

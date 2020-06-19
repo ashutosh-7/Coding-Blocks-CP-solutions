@@ -1,0 +1,114 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll adj[2000][2000];
+ll visited[2000][2000];
+ll component[2000][2000];
+ll size[100000];
+ll n,m;
+vector<ll>path;          
+
+ll dx[]={-1,1,0,0};
+ll dy[]={0,0,-1,1};
+                bool valid(ll x,ll y)
+                {
+
+                    if(x>=1 and x<=n and y>=1 and y<=m)
+                        return true ;
+                    return false;
+                }
+
+
+                void dfs(ll x,ll y,ll color)
+                {
+                    path.pb(1);
+                    component[x][y]=color;
+                    visited[x][y]=true;
+                    for(ll i=0;i<4;i++)
+                    {
+                        ll xx=x+dx[i];
+                        ll yy=y+dy[i];
+                        if(valid(xx,yy))
+                        {
+                            if(visited[xx][yy]==false and adj[xx][yy]==1)
+                                dfs(xx,yy,color);
+
+                        }
+                    }
+                }
+
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                
+                cin>>n>>m;
+                
+                for(ll i=1;i<=n;i++)
+                {
+                    for(ll j=1;j<=m;j++)
+                        cin>>adj[i][j];
+                }
+                
+                ll color=1;
+                size[0]=0;
+                component[0][0]=0;
+                for(ll i=1;i<=n;i++)
+                {
+                    for(ll j=1;j<=m;j++)
+                    {
+                        if(visited[i][j]==false and adj[i][j]==1)
+                        {
+                            dfs(i,j,color);
+                            // color+=1;
+                            size[color]=path.size();
+                            color+=1;
+                            path.clear();
+
+                        }
+                    }
+                }
+
+                ll ans=0,temp=0;
+                 for(ll i=1;i<=n;i++)
+                {
+                    for(ll j=1;j<=m;j++)
+                        {
+                            // cout<<component[i][j]<<" ";
+                            temp=1;
+                            set<ll>s;
+                            if(adj[i][j]==0){
+                            for(ll k=0;k<4;k++)
+                            {
+                                ll xx=i+dx[k];
+                                ll yy=j+dy[k];
+                                if(valid(xx,yy))
+                                {
+                                    s.insert(component[xx][yy]);
+                                }
+                            }
+                            for(auto it:s)
+                            {
+                                temp+=size[it];
+                            }
+
+                        }
+                            ans=max(ans,temp);
+                        }
+                        // cout<<endl;
+                }
+                // for(ll i=0;i<=5;i++)
+                //     cout<<size[i]<<" ";
+                cout<<ans<<endl;
+                return 0;
+            }

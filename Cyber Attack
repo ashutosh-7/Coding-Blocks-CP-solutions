@@ -1,0 +1,114 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+pair<ll,pair<ll,ll>>edges[100000];   
+vector<ll>parent;
+map<pair<ll,ll>,ll>id;
+
+
+      
+        
+
+                 ll find(ll n)
+          {
+            if(parent[n]==n)
+              return n;
+            return parent[n]=find(parent[n]);
+          }
+
+
+          ll add(ll a, ll b)
+          {
+            a=find(a);
+            b=find(b);
+            parent[b]=a;
+          }
+
+          ll kruskal(ll m)
+          {
+            for(ll i=0;i<m;i++)
+            {
+                ll cn=edges[i].second.first;
+                ll dn=edges[i].second.second;
+                ll weight=edges[i].first;
+
+                if(find(cn)!=find(dn)) //detect cycle before joining them
+                  {
+                      //make tree of this edge
+
+                        id[{cn,dn}]=1;
+                        id[{dn,cn}]=1;
+                        add(cn,dn);
+                    // ans+=weight;
+                  }
+            }
+          }
+
+
+
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll n,m;
+                cin>>n>>m;
+                parent.resize(n+1);
+                for(ll i=1;i<=n;i++)
+                    parent[i]=i;
+                ll x;
+                cin>>x;
+                for(ll i=0;i<m;i++)
+                {
+                    ll a,b,c;
+                    cin>>a>>b>>c;
+                    edges[i]={c,{a,b}};
+                }
+                sort(edges,edges+m,greater<pair<ll,pair<ll,ll> >>());
+                kruskal(m);
+                ll ans=0;
+                ll count=0;
+                vector<ll>path;
+                for(ll i=0;i<m;i++)
+                {
+                    ll cn=edges[i].second.first;
+                ll dn=edges[i].second.second;
+                ll weight=edges[i].first;
+                    if(id.find({edges[i].second.first,edges[i].second.second})==id.end())
+
+                    {
+                        //cout<<x<<" "<<edges[i].first<<endl;
+                        path.pb(weight);
+                    }
+                   // cout<<id[{cn,dn }]<<endl;
+                }
+                // for(ll i=0;i<path.size();i++)
+                //     cout<<path[i]<<" ";
+
+                sort(path.begin(),path.end());
+                for(ll i=0;i<path.size();i++)
+                {
+
+                    if(x<path[i])
+                        break;
+                    else
+                    {
+                        count+=1;
+                        x-=path[i];
+                        ans+=path[i];
+                    }
+                }
+                    // for(auto it:id)
+                    // {
+                    //     cout<<it.first.first<<" "<<it.first.second<<endl;
+                    // }
+                cout<<count<<" "<<ans<<endl;
+                return 0;
+            }

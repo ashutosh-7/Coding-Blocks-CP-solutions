@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<pair<ll,double> >adj[100001];
+double dist[100001];
+bool visited[100001];
+ll n,m;
+                void dijsktra(ll source)
+                {
+                    for(ll i=0;i<100000;i++)
+                    dist[i]=0;
+                    priority_queue<pair<double,ll> >q;
+                    q.push({1,source});
+                    memset(visited,false,sizeof(visited));
+                    dist[source]=1;
+                    while(!q.empty())
+                    {
+                        ll cn=q.top().second;
+                        double weight=q.top().first;
+                         q.pop();
+                         if(visited[cn]==true)
+                        continue;
+                        visited[cn]=true;
+                        for(auto it:adj[cn])
+                        {
+                             ll nn=it.first;
+                             double nw=it.second;
+                   
+                        if(dist[cn]*nw>dist[nn] ){
+                            dist[nn]=dist[cn]*nw;     
+                            q.push({dist[nn],nn});
+                        
+                    }
+                        }
+                        
+                    }
+
+                }
+
+
+
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                while(cin>>n)
+                {
+                    if(n==0)
+                        break;
+                    cin>>m;
+                    for(ll i=0;i<m;i++)
+                    {
+                        ll a,b;
+                        double c;
+                        cin>>a>>b>>c;
+                        c/=100.0;
+                        adj[a].pb({b,c});
+                        adj[b].pb({a,c});
+                    }
+                    dijsktra(1);
+                    double ans=dist[n]*100;
+                    cout<<fixed<<setprecision(6)<<ans<<" percent"<<endl;
+                    for(ll i=0;i<100001;i++)
+                        adj[i].clear();
+                }
+
+
+                return 0;
+            }

@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ vector<pair<ll,ll>>adj[100000]; //adj list for weighted graph
+ pair<ll, pair<ll,ll>> edges[100000];  //store weight and pair of edges into array use to sort the array on basis of their weight
+vector<ll>parent;
+
+//use dsu to detect cycle in graph
+          ll find(ll n)
+          {
+            if(parent[n]==n)
+              return n;
+            return parent[n]=find(parent[n]);
+          }
+
+
+          ll add(ll a, ll b)
+          {
+            a=find(a);
+            b=find(b);
+            parent[b]=a;
+          }
+
+          ll kruskal(ll m)
+          {
+
+              ll ans=0;
+              for(ll i=0;i<m;i++)
+              {
+                  ll weight=edges[i].first;
+                  ll edge1=edges[i].second.first;
+                  ll edge2=edges[i].second.second;
+                  if(find(edge1)!=find(edge2)) //detect cycle before joining them
+                  {
+                      //make tree of this edge
+                    adj[edge1].pb({edge2,weight});
+                    adj[edge2].pb({edge1,weight});
+                    add(edge1,edge2);
+                    ans+=weight;
+                  }
+              }
+              return ans;
+          }
+
+
+
+
+
+    
+int main() {
+				        fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+               ll n,m;
+               cin>>n>>m;
+               parent.resize(n+1);
+               for(ll i=1;i<=n;i++)
+                parent[i]=i;
+               map<pair<ll,ll>,ll>mp;
+               for(ll i=0;i<m;i++)
+               {
+                ll a,b,c;
+                cin>>a>>b>>c;
+                edges[i]={c,{a,b}};
+               }
+                sort(edges,edges+m);
+               // for(ll i=0;i<m;i++)
+               // cout<<edges[i].first<<" ";
+                ll ans=kruskal(m);
+                cout<<ans<<endl;
+
+                return 0;
+            }
