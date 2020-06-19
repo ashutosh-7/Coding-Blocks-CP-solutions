@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+map<ll,ll>dp;
+            ll solve(ll n)
+            {
+                if(n==0)
+                return 0;
+                if(n==1)
+                return 1;
+                
+                if(dp.find(n)!=dp.end())
+                return dp[n];
+
+                ll opn=solve(n/2)+solve(n/3)+solve(n/4);
+                return dp[n]=max(n,opn);
+            }
+           
+
+int main() {
+		        fast
+              
+                ll n;
+                while(cin>>n)
+                {
+                    cout<<solve(n)<<endl;
+                }
+
+                
+                return 0;
+}

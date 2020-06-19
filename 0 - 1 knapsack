@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e+7;
+
+int main() {
+			fast
+		
+
+			ll n,w;
+			cin>>n>>w;
+
+			ll dp[n+1][w+1];
+			memset(dp,0,sizeof(dp));
+			
+			vector<pair<ll,ll>>arr(n);
+			
+			for(ll i=0;i<n;i++)
+			{
+				ll x;
+				cin>>x;
+				arr[i].ff=x;
+			}
+			for(ll i=0;i<n;i++)
+			{
+				ll x;
+				cin>>x;
+				arr[i].ss=x;
+			}
+			
+			sort(arr.begin(),arr.end());
+			// for(ll i=0;i<n;i++)
+			// cout<<arr[i].ff<<" "<<arr[i].ss<<endl;
+
+			for(ll i=1;i<=n;i++)
+			{
+				for(ll j=1;j<=w;j++)
+				{
+					if(j>=arr[i-1].ff)
+					{
+						dp[i][j]=max(dp[i-1][j],arr[i-1].ss+dp[i-1][j-arr[i-1].ff]);
+					}
+					else
+					{
+						dp[i][j]=dp[i-1][j];
+					}
+					//cout<<dp[i][j]<<" ";
+				}
+				//cout<<endl;
+			}
+			cout<<dp[n][w]<<endl;
+			
+
+
+
+
+			return 0;
+		 }	

@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+string s1,s2;
+ll n1,n2;
+ll dp[1001][1001];
+
+				bool solve(ll i,ll j)
+				{
+					if(i==n1 and j==n2)
+					return 1;
+					if(i>n1 or j>n2)
+					return 0;
+					if(dp[i][j]!=-1)
+					return dp[i][j];
+					bool ans=false;
+					bool ans2=false;
+					if(s1[i]==s2[j])
+					{
+						ans=solve(i+1,j+1);
+					}
+					else
+					{
+						if(s2[j]=='?')
+						ans=solve(i+1,j+1);
+
+						else if(s2[j]=='*')
+						{
+							ans=solve(i+1,j+1);
+							ans2=solve(i+1,j);
+
+						}
+						
+
+					}
+
+					return dp[i][j]=ans or ans2;
+					
+				}
+	   
+int main() {
+			fast
+			
+			
+			cin>>s1>>s2;
+			n1=s1.size();
+			n2=s2.size();
+			memset(dp,-1,sizeof(dp));
+			ll x=solve(0,0);
+			if(x==0)
+			cout<<"NOT MATCHED";
+			else
+			{
+				cout<<"MATCHED";
+			}
+			
+			return 0;
+		 }	

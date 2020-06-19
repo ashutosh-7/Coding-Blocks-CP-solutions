@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+
+int main() {
+			//	fast
+                
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n;
+                    cin>>n;
+                    ll ans=1;
+                    if(n==1)
+                    {
+                        cout<<1<<endl;
+                        
+                    }
+                    else
+                    {
+                        ll x=1,y=1,z=1;
+                        ll ugly[n+1]={0};
+                        ugly[1]=1;
+                        for(ll i=2;i<=n;i++)
+                        {
+                            ll next=min(ugly[x]*2,min(3*ugly[y],5*ugly[z]));
+                           ugly[i]=next;
+                           //cout<<next<<" ";
+                            if(next==2*ugly[x])
+                                x+=1;
+                             if(next==3*ugly[y])
+                                y+=1;
+                            if(next==5*ugly[z])
+                                z+=1;
+                           // cout<<next<<" "<<x<<" "<<y<<" "<<z<<endl;
+                            if(i==n){
+                                cout<<next<<endl;
+                                break;
+                            }
+
+                        }
+                    }
+                }
+
+                return 0;
+            }

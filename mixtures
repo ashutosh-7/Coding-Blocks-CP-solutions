@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll n;
+ll arr[500];
+ll dp[500][500];
+				ll sum2(ll i,ll j)
+				{
+					ll ans=0;
+					for(ll k=i;k<=j;k++)
+					{
+						ans+=arr[k];
+						ans%=100;
+					}
+					return ans;
+				}
+
+			ll solve(ll i,ll j)
+			{
+				if(i>=j)
+				return 0;
+
+				if(dp[i][j]!=-1)
+				return dp[i][j];
+				ll ans=LLONG_MAX;
+				for(ll k=i;k<j;k++)
+				{
+					ans=min(ans,solve(i,k)+solve(k+1,j)+sum2(i,k)*sum2(k+1,j));
+
+				}
+				return dp[i][j]=ans;
+			}
+
+int main() {
+			fast
+			
+			
+			while(cin>>n)
+			{
+				
+				
+				memset(dp,-1,sizeof(dp));
+				for(ll i=1;i<=n;i++)
+				cin>>arr[i];
+
+				cout<<solve(1,n)<<endl;
+			}
+			
+			return 0;
+		 }	
